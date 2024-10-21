@@ -21,3 +21,18 @@
 
 ## działanie skryptu z zad 5
 ![](../../../nagrania/skrypt_zad5.gif)
+
+
+---
+
+
+## działanie skryptów z zad 6
+
+Z użyciem SmoothDamp 
+
+![](../../../nagrania/skrypt_zad6a.gif)
+
+
+Z użyciem Lerp
+
+![](../../../nagrania/skrypt_zad6b.gif)

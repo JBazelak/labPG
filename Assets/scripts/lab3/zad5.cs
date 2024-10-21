@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 public class CubeSpawner : MonoBehaviour
 {
-    public GameObject cubePrefab;  // Prefab Cube'a
-    public GameObject planeObject; // Obiekt p³aszczyzny
-    public int numberOfCubes = 10; // Liczba Cube'ów do wygenerowania
-    public Vector2 planeSize = new Vector2(10, 10); // Rozmiar p³aszczyzny
-    public float respawnTime = 3f; // Czas po którym Cube'y znikaj¹ i pojawiaj¹ siê nowe
+    public GameObject cubePrefab;  
+    public GameObject planeObject;
+    public int numberOfCubes = 10;
+    public Vector2 planeSize = new Vector2(10, 10); 
+    public float respawnTime = 3f; 
 
-    private List<Vector3> usedPositions = new List<Vector3>(); // Lista przechowuj¹ca u¿yte pozycje
-    private List<GameObject> spawnedCubes = new List<GameObject>(); // Lista przechowuj¹ca wygenerowane Cube'y
+    private List<Vector3> usedPositions = new List<Vector3>(); 
+    private List<GameObject> spawnedCubes = new List<GameObject>(); 
 
     void Start()
     {
@@ -21,7 +21,6 @@ public class CubeSpawner : MonoBehaviour
     // Funkcja generuj¹ca Cube'y
     void GenerateCubes()
     {
-        // Wyczyszczenie list u¿ywanych pozycji i wygenerowanych Cube'ów
         usedPositions.Clear();
 
         // Generowanie Cube'ów
@@ -29,18 +28,18 @@ public class CubeSpawner : MonoBehaviour
         {
             Vector3 randomPosition = GetRandomPosition();
             GameObject cube = Instantiate(cubePrefab, randomPosition, Quaternion.identity);
-            spawnedCubes.Add(cube); // Dodaj Cube'a do listy
+            spawnedCubes.Add(cube); 
         }
     }
 
-    // Funkcja do usuwania Cube'ów
+
     void RemoveCubes()
     {
         foreach (GameObject cube in spawnedCubes)
         {
-            Destroy(cube); // Usuniêcie Cube'a
+            Destroy(cube);
         }
-        spawnedCubes.Clear(); // Wyczyœæ listê Cube'ów
+        spawnedCubes.Clear(); 
     }
 
     // Funkcja, która co 3 sekundy respawnuje Cube'y
@@ -48,9 +47,9 @@ public class CubeSpawner : MonoBehaviour
     {
         while (true)
         {
-            GenerateCubes(); // Generowanie nowych Cube'ów
-            yield return new WaitForSeconds(respawnTime); // Czekaj 3 sekundy
-            RemoveCubes(); // Usuniêcie Cube'ów
+            GenerateCubes(); 
+            yield return new WaitForSeconds(respawnTime); 
+            RemoveCubes();
         }
     }
 
@@ -64,29 +63,27 @@ public class CubeSpawner : MonoBehaviour
         {
             isPositionValid = true;
 
-            // Losuj pozycjê na p³aszczyŸnie o rozmiarach 10x10
             float x = Random.Range(-planeSize.x / 2f, planeSize.x / 2f);
             float z = Random.Range(-planeSize.y / 2f, planeSize.y / 2f);
 
             // Zaokr¹glij pozycjê, aby upewniæ siê, ¿e Cube'y nie s¹ za blisko siebie
             position = new Vector3(Mathf.Round(x), 0f, Mathf.Round(z));
 
-            // Przesuñ pozycjê wzglêdem obiektu p³aszczyzny
+
             position += planeObject.transform.position;
 
-            // SprawdŸ, czy pozycja ju¿ nie jest zajêta
             foreach (Vector3 usedPosition in usedPositions)
             {
-                if (Vector3.Distance(usedPosition, position) < 1f) // Minimalna odleg³oœæ miêdzy Cube'ami
+                if (Vector3.Distance(usedPosition, position) < 1f) 
                 {
                     isPositionValid = false;
                     break;
                 }
             }
         }
-        while (!isPositionValid); // Powtarzaj, dopóki nie znajdziesz wolnej pozycji
+        while (!isPositionValid); 
 
-        usedPositions.Add(position); // Dodaj now¹ pozycjê do listy zajêtych pozycji
+        usedPositions.Add(position); 
         return position;
     }
 }
